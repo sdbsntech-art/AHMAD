@@ -6,6 +6,7 @@
     <title>AHMAD'ART - Designer & Content Creator</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -431,12 +432,11 @@
 <div id="videoModal" class="modal" role="dialog" aria-modal="true">
     <div class="modal-inner">
         <span class="modal-close" id="modalClose" title="Fermer">&times;</span>
-        <!--
-            On utilise un <video> direct sans <source> imbriqué :
-            on met src directement sur l'élément pour éviter
-            les bugs de rechargement.
-        -->
-        <video id="modalVideo" controls playsinline></video>
+        <div class="video-container">
+            <div id="player" data-plyr-provider="html5" data-plyr-embed-id="modalVideo">
+                <video id="modalVideo" playsinline controls></video>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -544,7 +544,14 @@
     </div>
 </footer>
 
+<script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 <script>
+/* ==================== INITIALISATION PLYR ==================== */
+const player = new Plyr('#modalVideo', {
+    controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
+    ratio: '9:16'
+});
+
 /* ==================== MENU MOBILE ==================== */
 const hamburger = document.querySelector('.hamburger');
 const navMenu   = document.querySelector('.nav-menu');
@@ -585,12 +592,10 @@ document.querySelectorAll('.reel-card').forEach(card => {
 
 /* ==================== MODAL VIDÉO ==================== */
 const videoModal = document.getElementById('videoModal');
-const modalVideo = document.getElementById('modalVideo');
 const modalClose = document.getElementById('modalClose');
 
 document.querySelectorAll('.reel-card').forEach(card => {
     card.addEventListener('click', () => {
-        // ✅ On lit data-src directement sur la card (chemin exact du fichier)
         const src = card.getAttribute('data-src');
         if (!src) return;
 
@@ -598,23 +603,31 @@ document.querySelectorAll('.reel-card').forEach(card => {
         const previewVideo = card.querySelector('video');
         if (previewVideo) previewVideo.pause();
 
-        // ✅ On assigne src directement à l'élément video (sans <source> imbriqué)
-        // Cela force le navigateur à recharger la bonne vidéo
-        modalVideo.src = src;
-        modalVideo.load();
-
         videoModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
 
-        modalVideo.play().catch(() => {
-            // L'autoplay peut être bloqué sur certains navigateurs — l'utilisateur clique sur play
-        });
+        // Support Hybride (YouTube ou Local)
+        if (src.includes('youtube.com') || src.includes('youtu.be')) {
+            const videoId = src.split('v=')[1]?.split('&')[0] || src.split('/').pop();
+            player.source = {
+                type: 'video',
+                sources: [{ src: videoId, provider: 'youtube' }],
+            };
+        } else {
+            player.source = {
+                type: 'video',
+                sources: [{ src: src, type: 'video/mp4' }],
+            };
+        }
+        
+        player.play();
     });
 });
 
 function closeModal() {
     videoModal.classList.remove('open');
-    modalVideo.pause();
-    modalVideo.src = ''; // Libère la ressource
+    document.body.style.overflow = '';
+    player.stop();
 }
 
 modalClose?.addEventListener('click', closeModal);
@@ -636,15 +649,25 @@ document.querySelectorAll('.portfolio-item').forEach(item => {
         if (img && lightboxImg) {
             lightboxImg.src = img.src;
             lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
         }
     });
 });
-lightboxClose?.addEventListener('click', () => lightbox.classList.remove('open'));
+lightboxClose?.addEventListener('click', () => {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+});
 lightbox?.addEventListener('click', e => {
-    if (e.target === lightbox) lightbox.classList.remove('open');
+    if (e.target === lightbox) {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 });
 document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') lightbox?.classList.remove('open');
+    if (e.key === 'Escape') {
+        lightbox?.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 });
 
 /* ==================== FORMULAIRE CONTACT ==================== */
@@ -683,7 +706,7 @@ document.querySelectorAll('.reel-card, .portfolio-item, .info-item').forEach(el 
 window.addEventListener('scroll', () => {
     let current = '';
     document.querySelectorAll('section').forEach(section => {
-        if (scrollY >= section.offsetTop - 200) current = section.getAttribute('id');
+        if (window.scrollY >= section.offsetTop - 200) current = section.getAttribute('id');
     });
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
