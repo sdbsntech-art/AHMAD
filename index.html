@@ -360,7 +360,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/v_panel.mp4">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i1.jpg">
                     <source src="AHMAD/media/videos/akb.mp4" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -371,7 +371,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/v2.mov">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i2.jpg">
                     <source src="AHMAD/media/videos/mmt.mov" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -382,7 +382,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/v24044_discours.mp4">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i3.jpg">
                     <source src="AHMAD/media/videos/v24044_discours.mp4" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -393,7 +393,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/v3.mov">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i4.jpg">
                     <source src="AHMAD/media/videos/v2.mov" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -404,7 +404,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/vmm.mp4">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i5.jpg">
                     <source src="AHMAD/media/videos/vmm.mp4" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -415,7 +415,7 @@
 
             <div class="reel-card"
                  data-src="AHMAD/media/videos/v_panel.mp4">
-                <video muted preload="none" loop playsinline>
+                <video muted preload="none" loop playsinline poster="AHMAD/media/photos/i6.jpg">
                     <source src="AHMAD/media/videos/v_panel.mp4" type="video/mp4">
                 </video>
                 <div class="reel-overlay">
@@ -597,6 +597,7 @@ const modalClose = document.getElementById('modalClose');
 document.querySelectorAll('.reel-card').forEach(card => {
     card.addEventListener('click', () => {
         const src = card.getAttribute('data-src');
+        const poster = card.querySelector('video')?.getAttribute('poster');
         if (!src) return;
 
         // Pause la preview
@@ -617,6 +618,7 @@ document.querySelectorAll('.reel-card').forEach(card => {
             player.source = {
                 type: 'video',
                 sources: [{ src: src, type: 'video/mp4' }],
+                poster: poster
             };
         }
         
