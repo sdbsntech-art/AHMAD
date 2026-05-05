@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AHMAD'ART - Designer & Content Creator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #ffd700;
+            --primary-dark: #e6c200;
+            --dark: #0f1724;
+            --gray: #6c757d;
+            --white: #ffffff;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* NAVIGATION */
+        .navbar {
+            position: fixed; top: 0; width: 100%;
+            background: rgba(15, 23, 36, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000; padding: 15px 0;
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo a { font-size: 1.5rem; font-weight: 700; text-decoration: none; color: var(--white); }
+        .logo a span { color: var(--primary); }
+        .nav-menu { display: flex; list-style: none; gap: 30px; }
+        .nav-link { text-decoration: none; color: var(--white); font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; }
+        .hamburger span { width: 25px; height: 3px; background: var(--white); margin: 3px 0; }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f1724 0%, #1e2a3a 100%);
+            display: flex; align-items: center; padding-top: 80px;
+        }
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(255, 215, 0, 0.1); padding: 8px 20px;
+            border-radius: 50px; margin-bottom: 20px;
+            font-size: 0.9rem; color: var(--primary);
+        }
+        .hero-title { font-size: 3rem; font-weight: 700; color: var(--white); margin-bottom: 15px; }
+        .gradient-text {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero-role { font-size: 1.2rem; color: var(--primary); margin-bottom: 15px; }
+        .hero-description { color: rgba(255,255,255,0.8); margin-bottom: 30px; }
+        .hero-buttons { display: flex; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: var(--dark); padding: 12px 25px; border-radius: 50px;
+            text-decoration: none; font-weight: 600;
+            display: inline-flex; align-items: center; gap: 8px; transition: transform 0.3s;
+        }
+        .btn-primary:hover { transform: translateY(-3px); }
+        .btn-outline {
+            border: 2px solid var(--primary); color: var(--white);
+            padding: 10px 23px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .btn-outline:hover { background: var(--primary); color: var(--dark); }
+        .hero-social { display: flex; gap: 15px; }
+        .social-icon {
+            width: 40px; height: 40px; background: rgba(255,255,255,0.1);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--white); text-decoration: none; transition: all 0.3s;
+        }
+        .social-icon:hover { background: var(--primary); color: var(--dark); }
+        .hero-image { position: relative; }
+        .image-frame {
+            position: relative; border-radius: 30px; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .image-frame img { width: 100%; height: auto; display: block; }
+        .camera-badge {
+            position: absolute; bottom: 20px; right: 20px;
+            background: var(--primary); width: 60px; height: 60px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: var(--dark); box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* SECTIONS */
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-tag {
+            display: inline-block; background: rgba(255, 215, 0, 0.1);
+            color: var(--primary); padding: 5px 15px; border-radius: 30px;
+            font-size: 0.8rem; margin-bottom: 15px;
+        }
+        .section-title { font-size: 2rem; font-weight: 700; }
+        .section-subtitle { color: var(--gray); }
+
+        /* REELS */
+        .reels-section, .portfolio-section, .contact-section { padding: 80px 0; }
+        .reels-section { background: #f8f9fa; }
+
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .reel-card {
+            position: relative;
+            aspect-ratio: 9 / 16;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: #111;
+        }
+        .reel-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.25); }
+
+        /* La vidéo remplit la card */
+        .reel-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Overlay avec bouton play */
+        .reel-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        .reel-card:hover .reel-overlay { background: rgba(0,0,0,0.15); }
+
+        .reel-play-btn {
+            width: 65px; height: 65px;
+            background: rgba(255,215,0,0.9);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem; color: var(--dark);
+            transition: transform 0.3s, background 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .reel-card:hover .reel-play-btn { transform: scale(1.1); background: var(--primary); }
+
+        .reel-title {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.85));
+            padding: 30px 15px 12px;
+            color: white; font-size: 0.9rem; font-weight: 500; text-align: center;
+        }
+
+        /* MODAL VIDÉO */
+        .modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.97);
+            z-index: 3000;
+            align-items: center; justify-content: center;
+        }
+        .modal.open { display: flex; }
+        .modal-inner {
+            position: relative;
+            width: min(420px, 92vw);
+            max-height: 92vh;
+        }
+        .modal-close {
+            position: absolute; top: -45px; right: 0;
+            color: white; font-size: 2.2rem;
+            cursor: pointer; line-height: 1;
+            transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--primary); }
+        #modalVideo {
+            width: 100%;
+            border-radius: 16px;
+            display: block;
+            max-height: 85vh;
+            object-fit: contain;
+            background: #000;
+        }
+
+        /* PORTFOLIO */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .portfolio-item {
+            position: relative; aspect-ratio: 1;
+            border-radius: 15px; overflow: hidden; cursor: pointer;
+        }
+        .portfolio-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
+        }
+        .portfolio-item:hover img { transform: scale(1.08); }
+        .portfolio-overlay {
+            position: absolute; inset: 0;
+            background: rgba(0,0,0,0.55);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+        .portfolio-overlay i { font-size: 2rem; color: var(--primary); }
+
+        /* LIGHTBOX */
+        .lightbox {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.95); z-index: 3000;
+            align-items: center; justify-content: center;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox-img { max-width: 90%; max-height: 90%; border-radius: 8px; }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 40px;
+            color: white; font-size: 3rem; cursor: pointer;
+        }
+
+        /* CONTACT */
+        .contact-section { background: linear-gradient(135deg, #0f1724, #1e2a3a); color: white; }
+        .contact-content { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .info-item {
+            display: flex; align-items: center; gap: 20px;
+            background: rgba(255,255,255,0.1); padding: 20px;
+            border-radius: 15px; margin-bottom: 20px;
+        }
+        .info-item i { font-size: 1.8rem; color: var(--primary); }
+        .info-item h4 { margin-bottom: 5px; }
+        .contact-form { display: flex; flex-direction: column; gap: 15px; }
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            padding: 12px 15px; border: none; border-radius: 10px;
+            background: rgba(255,255,255,0.1); color: white; font-family: inherit;
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder { color: rgba(255,255,255,0.6); }
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--primary); }
+        .contact-form select option { background: var(--dark); }
+        .btn-submit {
+            background: var(--primary); color: var(--dark); padding: 12px;
+            border: none; border-radius: 10px; font-weight: 600;
+            cursor: pointer; transition: background 0.3s;
+        }
+        .btn-submit:hover { background: var(--primary-dark); }
+
+        /* FOOTER */
+        .footer { background: var(--dark); color: white; padding: 30px 0; text-align: center; }
+        .footer-social { display: flex; gap: 15px; justify-content: center; margin-top: 15px; }
+        .footer-social a { color: white; font-size: 1.2rem; transition: color 0.3s; }
+        .footer-social a:hover { color: var(--primary); }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .hero-social { justify-content: center; }
+            .contact-content { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: fixed; left: -100%; top: 70px;
+                flex-direction: column; background: var(--dark);
+                width: 100%; text-align: center; padding: 20px; transition: 0.3s;
+            }
+            .nav-menu.active { left: 0; }
+            .hero-title { font-size: 2rem; }
+            .section-title { font-size: 1.5rem; }
+            .reels-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+        }
+        @media (max-width: 480px) {
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-outline { width: 100%; text-align: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="container">
+        <div class="logo"><a href="#">AHMAD'<span>ART</span></a></div>
+        <ul class="nav-menu">
+            <li><a href="#home"      class="nav-link active">Accueil</a></li>
+            <li><a href="#reels"     class="nav-link">Mes Reels</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#contact"   class="nav-link">Contact</a></li>
+        </ul>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge"><i class="fas fa-camera"></i> Content Creator</div>
+                <h1 class="hero-title">Je suis <span class="gradient-text">AHMAD'ART</span></h1>
+                <p class="hero-role">Content Creator - Designer - Graphiste - Etudiant en  deuxieme annee licence Informatique</p>
+                <p class="hero-description">Je capture l'instant, je crée l'émotion. Spécialiste en création de reels et couverture événementielle.</p>
+                <div class="hero-buttons">
+                    <a href="#reels"   class="btn-primary"><i class="fas fa-play"></i> Voir mes Reels</a>
+                    <a href="#contact" class="btn-outline"><i class="fas fa-comment"></i> Me contacter</a>
+                </div>
+                <div class="hero-social">
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="image-frame">
+                    <img src="AHMAD/media/photos/IM3.jpeg" alt="AHMAD'ART"
+                         onerror="this.src='https://placehold.co/600x700/1e2a3a/ffd700?text=AHMAD%27ART'">
+                    <div class="camera-badge"><i class="fas fa-camera"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REELS -->
+<section id="reels" class="reels-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Contenu Viral</span>
+            <h2 class="section-title">Mes <span class="gradient-text">Reels</span></h2>
+            <p class="section-subtitle">Des créations sur mesure pour mes clients</p>
+        </div>
+
+        <div class="reels-grid">
+
+            <!--
+                IMPORTANT : data-src doit pointer vers votre fichier vidéo.
+                C'est ce chemin qui est utilisé par le modal.
+                Le <video> en preview joue automatiquement au survol.
+            -->
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/v09044g40000cre5oc7og65qi20r8i40.MP4">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/AKB.MP4" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">🎬Nature filming</div>
+            </div>
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/v2.mov">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/MMT.mov" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">Collection de tenue </div>
+            </div>
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/v24044gl0000d7g4ai7og65js9gqtdo0 2.MP4">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/v24044gl0000d7g4ai7og65js9gqtdo0 2.MP4" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">Resume discours</div>
+            </div>
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/v3.MOV">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/v2.mov" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">Presentation membres Bureau</div>
+            </div>
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/VMM.MP4">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/VMM.MP4" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">Gamou tivaouane</div>
+            </div>
+
+            <div class="reel-card"
+                 data-src="AHMAD/media/videos/v09044g40000cre5oc7og65qi20r8i40.MP4">
+                <video muted preload="none" loop playsinline>
+                    <source src="AHMAD/media/videos/v09044g40000cre5oc7og65qi20r8i40.MP4" type="video/mp4">
+                </video>
+                <div class="reel-overlay">
+                    <div class="reel-play-btn"><i class="fas fa-play"></i></div>
+                </div>
+                <div class="reel-title">PANEL</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- MODAL VIDÉO -->
+<div id="videoModal" class="modal" role="dialog" aria-modal="true">
+    <div class="modal-inner">
+        <span class="modal-close" id="modalClose" title="Fermer">&times;</span>
+        <!--
+            On utilise un <video> direct sans <source> imbriqué :
+            on met src directement sur l'élément pour éviter
+            les bugs de rechargement.
+        -->
+        <video id="modalVideo" controls playsinline></video>
+    </div>
+</div>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="portfolio-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Galerie</span>
+            <h2 class="section-title">Mes <span class="gradient-text">Créations</span></h2>
+            <p class="section-subtitle">Quelques images de mes derniers projets</p>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/M1.jpg" alt="Création 1"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+1'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/AFF1.JPEG" alt="Création 2"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+2'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/M2.jpg"Création 3"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+3'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/AFF3.JPG" alt="Création 4"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+4'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/l.jpg" alt="Création 5"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+5'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+            <div class="portfolio-item">
+                <img src="AHMAD/media/photos/c4dfca6e-367a-431f-81d2-4b6b98227df4 2.JPG" alt="Création 6"
+                     onerror="this.src='https://placehold.co/400x400/1e2a3a/ffd700?text=Photo+6'">
+                <div class="portfolio-overlay"><i class="fas fa-search-plus"></i></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img class="lightbox-img" src="" alt="">
+</div>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Parlons de votre projet</span>
+            <h2 class="section-title">Contactez-<span class="gradient-text">moi</span></h2>
+        </div>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div><h4>Téléphone</h4><p>+221 78 557 72 29</p></div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div><h4>Email</h4><p>fallchei099@gmail.com</p></div>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div><h4>Localisation</h4><p>Dakar,Cité des Eaux et Fôrets, Sénégal</p></div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <input type="text"  placeholder="Votre nom"   required>
+                <input type="email" placeholder="Votre email" required>
+                <select required>
+                    <option value="">Type de projet</option>
+                    <option value="reel">Création de Reel</option>
+                    <option value="event">Couverture événementielle</option>
+                    <option value="photo">Séance photo</option>
+                    <option value="other">Autre</option>
+                </select>
+                <textarea rows="4" placeholder="Décrivez votre projet..." required></textarea>
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> Envoyer
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <p>&copy; 2026 AHMAD'ART — Tous droits réservés</p>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/_ahmadart_?igsh=Z2xvM3hyazZkNWtk&utm_source=qr
+"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@_ahmadart?_r=1&_t=ZS-963OsV7hKT6
+"><i class="fab fa-tiktok"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+/* ==================== MENU MOBILE ==================== */
+const hamburger = document.querySelector('.hamburger');
+const navMenu   = document.querySelector('.nav-menu');
+
+hamburger?.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+/* ==================== SMOOTH SCROLL ==================== */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+/* ==================== PREVIEW VIDÉO AU SURVOL ==================== */
+document.querySelectorAll('.reel-card').forEach(card => {
+    const video = card.querySelector('video');
+    if (!video) return;
+
+    card.addEventListener('mouseenter', () => {
+        video.play().catch(() => {});
+    });
+    card.addEventListener('mouseleave', () => {
+        video.pause();
+        video.currentTime = 0;
+    });
+});
+
+/* ==================== MODAL VIDÉO ==================== */
+const videoModal = document.getElementById('videoModal');
+const modalVideo = document.getElementById('modalVideo');
+const modalClose = document.getElementById('modalClose');
+
+document.querySelectorAll('.reel-card').forEach(card => {
+    card.addEventListener('click', () => {
+        // ✅ On lit data-src directement sur la card (chemin exact du fichier)
+        const src = card.getAttribute('data-src');
+        if (!src) return;
+
+        // Pause la preview
+        const previewVideo = card.querySelector('video');
+        if (previewVideo) previewVideo.pause();
+
+        // ✅ On assigne src directement à l'élément video (sans <source> imbriqué)
+        // Cela force le navigateur à recharger la bonne vidéo
+        modalVideo.src = src;
+        modalVideo.load();
+
+        videoModal.classList.add('open');
+
+        modalVideo.play().catch(() => {
+            // L'autoplay peut être bloqué sur certains navigateurs — l'utilisateur clique sur play
+        });
+    });
+});
+
+function closeModal() {
+    videoModal.classList.remove('open');
+    modalVideo.pause();
+    modalVideo.src = ''; // Libère la ressource
+}
+
+modalClose?.addEventListener('click', closeModal);
+videoModal?.addEventListener('click', e => {
+    if (e.target === videoModal) closeModal();
+});
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+
+/* ==================== LIGHTBOX PHOTOS ==================== */
+const lightbox      = document.getElementById('lightbox');
+const lightboxImg   = lightbox?.querySelector('.lightbox-img');
+const lightboxClose = lightbox?.querySelector('.lightbox-close');
+
+document.querySelectorAll('.portfolio-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (img && lightboxImg) {
+            lightboxImg.src = img.src;
+            lightbox.classList.add('open');
+        }
+    });
+});
+lightboxClose?.addEventListener('click', () => lightbox.classList.remove('open'));
+lightbox?.addEventListener('click', e => {
+    if (e.target === lightbox) lightbox.classList.remove('open');
+});
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') lightbox?.classList.remove('open');
+});
+
+/* ==================== FORMULAIRE CONTACT ==================== */
+document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi...';
+    btn.disabled = true;
+    setTimeout(() => {
+        alert('✅ Message envoyé ! Je vous répondrai rapidement.');
+        this.reset();
+        btn.innerHTML = orig;
+        btn.disabled = false;
+    }, 1000);
+});
+
+/* ==================== ANIMATION AU SCROLL ==================== */
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reel-card, .portfolio-item, .info-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'all 0.5s ease';
+    observer.observe(el);
+});
+
+/* ==================== ACTIVE NAV LINK ==================== */
+window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('section').forEach(section => {
+        if (scrollY >= section.offsetTop - 200) current = section.getAttribute('id');
+    });
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    });
+});
+</script>
+</body>
+</html>
